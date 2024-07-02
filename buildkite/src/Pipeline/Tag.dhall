@@ -15,6 +15,7 @@ let Tag
       | Lint
       | Release
       | Test
+      | Stable
       | Toolchain
       | Hardfork
       | Stable
