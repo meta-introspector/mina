@@ -1,4 +1,6 @@
 open Integration_test_lib
+open Core_kernel
+open Async
 
 module DockerContext = struct
   type t =
@@ -19,33 +21,40 @@ module Executor = struct
   let of_context ~context ~dune_name ~official_name =
     { context; dune_name; official_name }
 
-  let run_from_debian t ~(args:string list) ?(env=`Extend []) =
-    Util.run_cmd_exn "." t.official_name args ~env  
+  let run_from_debian t ~(args:string list) ?env () =
+    Util.run_cmd_exn "." t.official_name args ?env ()
    
-  let run_from_dune t ~(args:string list) ?(env=`Extend []) =
-    Util.run_cmd_exn "." "dune" ([ "exec"; t.dune_name; "--" ] @ args ) ~env   
+  let run_from_dune t ~(args:string list) ?env () =
+    Util.run_cmd_exn "." "dune" ([ "exec"; t.dune_name; "--" ] @ args ) ?env ()  
   
-  let run_from_local t ~(args:string list) ?(env=`Extend []) =
-    Util.run_cmd_exn "." (Printf.sprintf "_build/default/%s" t.dune_name) args ~env   
+  let run_from_local t ~(args:string list) ?env () =
+    Util.run_cmd_exn "." (Printf.sprintf "_build/default/%s" t.dune_name) args ?env ()
     
   let built_name t = 
     (Printf.sprintf "_build/default/%s" t.dune_name)
 
-  let run t ~(args:string list) ?(env=`Extend [])=
+  let run t ~(args:string list) ?env () =
+    let open Deferred.Let_syntax in
+    let logger = Logger.create () in
     match t.context with
     | AutoDetect -> 
-        if Sys.file_exists (built_name t) then 
-          run_from_local t ~args ~env  
-        else if Sys.file_exists t.official_name then
-          run_from_debian t ~args ~env
-        else
-          run_from_dune t ~args ~env
+        (match%bind Sys.file_exists (built_name t) with
+          | `Yes ->  
+            [%log debug] "running from _build/default folder" ~metadata:[("app",`String (built_name t))];
+            run_from_local t ~args ?env ()
+          | _ ->  match%bind Sys.file_exists t.official_name with
+                    | `Yes ->
+                        [%log debug] "running from _build/default folder" ~metadata:[("app",`String t.official_name)];
+                        run_from_debian t ~args ?env ()
+                    | _ -> 
+                        [%log debug] "running from _build/default folder" ~metadata:[("app",`String t.dune_name)];
+                        run_from_dune t ~args ?env ())
     | Dune ->
-        run_from_dune t ~args ~env
+        run_from_dune t ~args ?env ()
     | Debian ->
-        run_from_debian t ~args ~env
+        run_from_debian t ~args ?env ()
     | Local -> 
-        run_from_local t ~args ~env
+        run_from_local t ~args ?env ()
     | Docker ctx ->
         let docker = Docker.Client.default in
         let cmd = [ t.official_name ] @ args in

@@ -44,17 +44,15 @@ module Requests = struct
       ; "POST"
       ; path
       ]
-      ~env:(`Extend [])
+      ()
 
   let post_no_data t ~path =
     Util.run_cmd_exn "." t.curl_app
-      [ "--unix-socket"; t.unix_socket; "-X"; "POST"; path ]
-      ~env:(`Extend [])
+      [ "--unix-socket"; t.unix_socket; "-X"; "POST"; path ] ()
 
   let get t ~path =
     Util.run_cmd_exn "." t.curl_app
-      [ "--unix-socket"; t.unix_socket; Printf.sprintf path ]
-      ~env:(`Extend [])
+      [ "--unix-socket"; t.unix_socket; Printf.sprintf path ] ()
 end
 
 module Client = struct

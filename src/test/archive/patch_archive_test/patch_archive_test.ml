@@ -21,7 +21,7 @@ module Network_Data = struct
     {
       init_script = "archive_db.sql"
       ; genesis_ledger_file = "input.json"
-      ; precomputed_blocks_zip = "precomputeb_blocks.zip"
+      ; precomputed_blocks_zip = "precomputed_blocks.zip"
       ; folder 
     }
 
@@ -29,23 +29,36 @@ end
 
 open Core_kernel
 open Async
+open Mina_automation
 
 let main ~db_uri ~network_data_folder () =
   let open Deferred.Let_syntax in
   let logger = Logger.create () in
-  let db_uri = Uri.of_string db_uri in
+  let archive_uri = db_uri in
   
   let network_data = Network_Data.create network_data_folder in 
 
-  let%bind () = Integration_test_lib.Util.run_cmd_exn 
-    (Printf.sprintf "unzip %s/%s -d %s" network_data_folder network_data.precomputed_blocks_zip network_data_folder )
+  let%bind (_) = Integration_test_lib.Util.run_cmd_exn 
+    "." "unzip" [
+      "-oqq";
+      Printf.sprintf "%s/%s" network_data_folder network_data.precomputed_blocks_zip ; 
+      "-d";
+      Printf.sprintf "%s" network_data_folder ] () 
   in
   
-  let precomputed_blocks = Precomputed_block.list_directory ~network:"mainnet" ~path:network_data_folder in
+  let%bind precomputed_blocks = Precomputed_block.list_directory ~network:"mainnet" ~path:network_data_folder in
 
+  [%log info] "precomputed blocks" ~metadata:[("count", `Int (Set.length precomputed_blocks))];
+
+  let blocks = precomputed_blocks |> Set.to_list |> List.map ~f:(fun id ->
+    Printf.sprintf "%s/%s" network_data_folder (Precomputed_block.Id.filename ~network:"mainnet" id)
+  )
   
-
+  in
+  let archive_blocks = Archive_blocks.of_context Executor.AutoDetect in
+  let%bind (_) = Archive_blocks.run archive_blocks ~blocks ~archive_uri in
   Deferred.unit
+  
 
 let () =
   Command.(

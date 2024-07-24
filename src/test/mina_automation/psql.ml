@@ -33,11 +33,11 @@ let create_credential_arg ~connection =
 
 let run_command ~connection command =
   let creds = create_credential_arg ~connection in
-  Util.run_cmd_exn "." psql (creds @ [ "-c"; command ]) ~env:(`Extend [])
+  Util.run_cmd_exn "." psql (creds @ [ "-c"; command ]) ()
 
 let run_script ~connection ~db script =
   let creds = create_credential_arg ~connection in
-  Util.run_cmd_exn "." psql (creds @ [ "-d"; db; "-a"; "-f"; script ]) ~env:(`Extend [])
+  Util.run_cmd_exn "." psql (creds @ [ "-d"; db; "-a"; "-f"; script ]) ()
 
 let create_new_mina_archive ~connection ~db ~script =
   let open Deferred.Let_syntax in
@@ -64,7 +64,7 @@ let create_mainnet_db ~connection ~name ~working_dir =
       ; "-O"
       ; create_schema_script
       ]
-      ~env:(`Extend [])
+      ()
   in
   let%bind _ = run_script ~connection ~db:name create_schema_script in
   Deferred.return name
@@ -83,7 +83,7 @@ let create_random_mainnet_db ~connection ~prefix ~working_dir =
       ; "-O"
       ; create_schema_script
       ]
-      ~env:(`Extend [])
+      ()
   in
   let%bind _ = run_script ~connection ~db:name create_schema_script in
   Deferred.return name
