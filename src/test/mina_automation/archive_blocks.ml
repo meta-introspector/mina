@@ -7,13 +7,17 @@ let of_context context =
     ~dune_name:"src/app/archive_blocks/archive_blocks.exe"
     ~official_name:"mina-archive-blocks"
 
-type format = Precomputed | Extensional 
+type format = Precomputed | Extensional
 
-let format_to_string format = 
+let format_to_string format =
   match format with
-    | Precomputed -> "precomputed"
-    | Extensional -> "extensional"
-  
+  | Precomputed ->
+      "precomputed"
+  | Extensional ->
+      "extensional"
 
-let run t ~blocks ~archive_uri ?(format=Precomputed) =
-  run t ~args:([ "--archive-uri"; archive_uri; "--" ^ (format_to_string format) ] @ blocks) ()
+let run t ~blocks ~archive_uri ?(format = Precomputed) =
+  run t
+    ~args:
+      ([ "--archive-uri"; archive_uri; "--" ^ format_to_string format ] @ blocks)
+    ()

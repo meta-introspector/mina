@@ -66,9 +66,8 @@ let of_context context =
   Executor.of_context ~context ~dune_name:"src/app/replayer/replayer.exe"
     ~official_name:"mina-replayer"
 
-let run t  ~archive_uri ~input_config
-    ~interval_checkpoint ?checkpoint_output_folder ?checkpoint_file_prefix
-    ~output_ledger =
+let run t ~archive_uri ~input_config ~interval_checkpoint
+    ?checkpoint_output_folder ?checkpoint_file_prefix ~output_ledger =
   let checkpoint_output_folder =
     match checkpoint_output_folder with
     | Some checkpoint_output_folder ->

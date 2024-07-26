@@ -12,6 +12,23 @@ module Credentials = struct
     }
 end
 
+let create_db_script () =
+  match%bind Sys.file_exists "src/app/archive/create_schema.sql" with
+  | `Yes ->
+      Deferred.return "src/app/archive/create_schema.sql"
+  | _ -> (
+      match%bind
+        Sys.file_exists "_build/default/src/archive/create_schema.sql"
+      with
+      | `Yes ->
+          Deferred.return "_build/default/src/archive/create_schema.sql"
+      | _ -> (
+          match%bind Sys.file_exists "/etc/mina/archive/create_schema.sql" with
+          | `Yes ->
+              Deferred.return "/etc/mina/archive/create_schema.sql"
+          | _ ->
+              failwith "cannot find create db script" ) )
+
 type connection = Conn_str of string | Credentials of Credentials.t
 
 let psql = "psql"
@@ -20,30 +37,28 @@ let create_credential_arg ~connection =
   let value_or_empty arg item =
     match item with Some item -> [ arg; item ] | None -> []
   in
-  
-  let credentials = match connection with
-  | Conn_str conn_str ->
-      let uri = conn_str |> Uri.of_string in
-      let password = uri |> Uri.password |> Option.value_exn in
-      let user = uri  |> Uri.user in
-      let host = uri  |> Uri.host in
-      let port = uri |> Uri.port in
-      let db = uri |> Uri.path in 
-      let db = if String.is_empty db then
-          None
-      else 
-          Some db
-      in
-      { Credentials.password; user; host ; db ;port }
-  | Credentials credentials ->
-      credentials
+
+  let credentials =
+    match connection with
+    | Conn_str conn_str ->
+        let uri = conn_str |> Uri.of_string in
+        let password = uri |> Uri.password |> Option.value_exn in
+        let user = uri |> Uri.user in
+        let host = uri |> Uri.host in
+        let port = uri |> Uri.port in
+        let db = uri |> Uri.path in
+        let db = if String.is_empty db then None else Some db in
+        { Credentials.password; user; host; db; port }
+    | Credentials credentials ->
+        credentials
   in
 
-      Unix.putenv ~key:"PGPASSWORD" ~data:credentials.password ;
-      value_or_empty "-U" credentials.user
-      @ value_or_empty "-p" (Option.map ~f:string_of_int credentials.port)
-      @ value_or_empty "-h" credentials.host @ value_or_empty "-U" credentials.user
-      @ value_or_empty "-d" credentials.db
+  Unix.putenv ~key:"PGPASSWORD" ~data:credentials.password ;
+  value_or_empty "-U" credentials.user
+  @ value_or_empty "-p" (Option.map ~f:string_of_int credentials.port)
+  @ value_or_empty "-h" credentials.host
+  @ value_or_empty "-U" credentials.user
+  @ value_or_empty "-d" credentials.db
 
 let run_command ~connection command =
   let creds = create_credential_arg ~connection in
@@ -53,51 +68,24 @@ let run_script ~connection ~db script =
   let creds = create_credential_arg ~connection in
   Util.run_cmd_exn "." psql (creds @ [ "-d"; db; "-a"; "-f"; script ]) ()
 
-let create_new_mina_archive ~connection ~db ~script =
-  let open Deferred.Let_syntax in
-  let%bind _ = run_command ~connection (sprintf "CREATE DATABASE %s;" db) in
-  let%bind _ = run_script ~connection ~db script in
-  Deferred.unit
+let create_empty_db ~connection ~db =
+  run_command ~connection (sprintf "CREATE DATABASE %s;" db)
 
-let create_new_random_archive ~connection ~prefix ~script =
+let create_empty_random_db ~connection ~prefix =
   let open Deferred.Let_syntax in
   let db = sprintf "%s_%d" prefix (Random.int 10000 + 1000) in
-  let%bind _ = create_new_mina_archive ~connection ~db ~script in
+  let%bind _ = create_empty_db ~connection ~db in
   Deferred.return db
 
-let create_mainnet_db ~connection ~name ~working_dir =
+let create_mina_db ~connection ~db =
   let open Deferred.Let_syntax in
-  let create_schema_script =
-    Filename.concat working_dir (sprintf "%s.sql" name)
-  in
-  let%bind _ = run_command ~connection (sprintf "CREATE DATABASE %s;" name) in
-  let%bind _ =
-    Util.run_cmd_exn "." "wget"
-      [ "-c"
-      ; "https://raw.githubusercontent.com/MinaProtocol/mina/compatible/src/app/archive/create_schema.sql"
-      ; "-O"
-      ; create_schema_script
-      ]
-      ()
-  in
-  let%bind _ = run_script ~connection ~db:name create_schema_script in
-  Deferred.return name
+  let%bind _ = create_empty_db ~connection ~db in
+  let%bind create_script = create_db_script () in
+  run_script ~connection ~db create_script >>| ignore
 
-let create_random_mainnet_db ~connection ~prefix ~working_dir =
+let create_random_mina_db ~connection ~prefix =
   let open Deferred.Let_syntax in
-  let name = sprintf "%s_%d" prefix (Random.int 1000000 + 1000) in
-  let create_schema_script =
-    Filename.concat working_dir (sprintf "%s.sql" name)
-  in
-  let%bind _ = run_command ~connection (sprintf "CREATE DATABASE %s;" name) in
-  let%bind _ =
-    Util.run_cmd_exn "." "wget"
-      [ "-c"
-      ; "https://raw.githubusercontent.com/MinaProtocol/mina/compatible/src/app/archive/create_schema.sql"
-      ; "-O"
-      ; create_schema_script
-      ]
-      ()
-  in
-  let%bind _ = run_script ~connection ~db:name create_schema_script in
-  Deferred.return name
+  let%bind db = create_empty_random_db ~connection ~prefix in
+  let%bind create_script = create_db_script () in
+  let%bind _ = run_script ~connection ~db create_script in
+  Deferred.return db

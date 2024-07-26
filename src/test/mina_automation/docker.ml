@@ -48,11 +48,13 @@ module Requests = struct
 
   let post_no_data t ~path =
     Util.run_cmd_exn "." t.curl_app
-      [ "--unix-socket"; t.unix_socket; "-X"; "POST"; path ] ()
+      [ "--unix-socket"; t.unix_socket; "-X"; "POST"; path ]
+      ()
 
   let get t ~path =
     Util.run_cmd_exn "." t.curl_app
-      [ "--unix-socket"; t.unix_socket; Printf.sprintf path ] ()
+      [ "--unix-socket"; t.unix_socket; Printf.sprintf path ]
+      ()
 end
 
 module Client = struct
