@@ -11,8 +11,9 @@ module Config = struct
     ; precomputed_blocks: Uri.t
     ; network: string
     ; run_mode: mode
-    ; missing_blocks_auditor: string option
-    ; archive_blocks:string option
+    ; missing_blocks_auditor: string
+    ; archive_blocks:string
+    ; block_format: Archive_blocks.format
     }
 
   let to_args t = 
@@ -21,30 +22,21 @@ module Config = struct
       | Run -> ["single-run"]
     
   let to_envs t = 
+    let path = Uri.path t.archive_uri in 
+    let path_no_leading_slash = String.sub path ~pos:1 ~len:(String.length path - 1) in
+
     `Extend ([
       ("MINA_NETWORK", t.network)
       ; ("PRECOMPUTED_BLOCKS_URL", Uri.to_string t.precomputed_blocks)
       ; ("DB_USERNAME",Option.value_exn (Uri.user t.archive_uri) )
       ; ("DB_HOST",Uri.host_with_default ~default:"localhost" t.archive_uri)
       ; ("DB_PORT",Int.to_string (Option.value_exn (Uri.port t.archive_uri)) )
-      ; ("DB_NAME",Uri.path t.archive_uri )
+      ; ("DB_NAME", path_no_leading_slash)
       ; ("PGPASSWORD",Option.value_exn (Uri.password t.archive_uri) )
-    ] @
-    
-     ( Option.map t.missing_blocks_auditor ~f:(fun x ->
-        ["MINA_MISSING_BLOCKS_AUDITOR_APP",x]
-       ) |> Option.value ~default:[]
-    
-     )
-    @
-
-    (
-      Option.map t.archive_blocks ~f:(fun x ->
-        ["MINA_ARCHIVE_BLOCKS_APP",x]
-       ) |> Option.value ~default:[]
-       
-    )
-    )
+      ; ("BLOCKS_FORMAT",Archive_blocks.format_to_string t.block_format )
+      ; ("MISSING_BLOCKS_AUDITOR", t.missing_blocks_auditor)
+      ; ("ARCHIVE_BLOCKS", t.archive_blocks )
+    ])
 end
 
 
@@ -54,6 +46,6 @@ let of_context context =
     ~official_name:"/etc/mina/scripts/missing-blocks-guardian.sh"
 
 let run t ~config =
-  run t ~args:(Config.to_args config) ~env:(Config.to_envs config)
+  run t ~args:(Config.to_args config) ~env:(Config.to_envs config) ()
 
   

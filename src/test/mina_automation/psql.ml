@@ -17,19 +17,33 @@ type connection = Conn_str of string | Credentials of Credentials.t
 let psql = "psql"
 
 let create_credential_arg ~connection =
-  match connection with
+  let value_or_empty arg item =
+    match item with Some item -> [ arg; item ] | None -> []
+  in
+  
+  let credentials = match connection with
   | Conn_str conn_str ->
-      [ conn_str ]
-  | Credentials { user; password; host; port; db } ->
-      Unix.putenv ~key:"PGPASSWORD" ~data:password ;
-      let value_or_empty arg item =
-        match item with Some item -> [ arg; item ] | None -> []
+      let uri = conn_str |> Uri.of_string in
+      let password = uri |> Uri.password |> Option.value_exn in
+      let user = uri  |> Uri.user in
+      let host = uri  |> Uri.host in
+      let port = uri |> Uri.port in
+      let db = uri |> Uri.path in 
+      let db = if String.is_empty db then
+          None
+      else 
+          Some db
       in
+      { Credentials.password; user; host ; db ;port }
+  | Credentials credentials ->
+      credentials
+  in
 
-      value_or_empty "-U" user
-      @ value_or_empty "-p" (Option.map ~f:string_of_int port)
-      @ value_or_empty "-h" host @ value_or_empty "-U" user
-      @ value_or_empty "-d" db
+      Unix.putenv ~key:"PGPASSWORD" ~data:credentials.password ;
+      value_or_empty "-U" credentials.user
+      @ value_or_empty "-p" (Option.map ~f:string_of_int credentials.port)
+      @ value_or_empty "-h" credentials.host @ value_or_empty "-U" credentials.user
+      @ value_or_empty "-d" credentials.db
 
 let run_command ~connection command =
   let creds = create_credential_arg ~connection in

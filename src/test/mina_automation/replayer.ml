@@ -66,12 +66,9 @@ let of_context context =
   Executor.of_context ~context ~dune_name:"src/app/replayer/replayer.exe"
     ~official_name:"mina-replayer"
 
-let run t ?(migration_mode = false) ~archive_uri ~input_config
+let run t  ~archive_uri ~input_config
     ~interval_checkpoint ?checkpoint_output_folder ?checkpoint_file_prefix
     ~output_ledger =
-  let migration_mode_args =
-    match migration_mode with true -> [ "--migration-mode" ] | false -> []
-  in
   let checkpoint_output_folder =
     match checkpoint_output_folder with
     | Some checkpoint_output_folder ->
@@ -96,7 +93,7 @@ let run t ?(migration_mode = false) ~archive_uri ~input_config
     ; "--output-file"
     ; output_ledger
     ]
-    @ checkpoint_output_folder @ checkpoint_file_prefix @ migration_mode_args
+    @ checkpoint_output_folder @ checkpoint_file_prefix
   in
 
   run t ~args

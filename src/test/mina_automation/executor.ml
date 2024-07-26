@@ -33,6 +33,18 @@ module Executor = struct
   let built_name t = 
     (Printf.sprintf "_build/default/%s" t.dune_name)
 
+  let path t = 
+    match%bind Sys.file_exists (built_name t) with
+    | `Yes ->  
+      Deferred.return (built_name t)
+    | _ ->  match%bind Sys.file_exists t.official_name with
+              | `Yes ->
+                Deferred.return t.official_name
+              | _ -> 
+                Deferred.return t.dune_name
+    
+
+
   let run t ~(args:string list) ?env () =
     let open Deferred.Let_syntax in
     let logger = Logger.create () in
