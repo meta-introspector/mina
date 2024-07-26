@@ -3,9 +3,18 @@ open Async
 module Timeout = Timeout_lib.Core_time
 
 let run_cmd dir prog args ?env ()=
+  let list = match env with
+    | None -> []
+    | Some env -> match env with 
+      | `Extend list -> List.map list ~f:(fun (key,value) -> `String (key ^ "=" ^ value))
+      |  _ -> []
+  in
+  
   [%log' spam (Logger.create ())]
     "Running command (from %s): $command" dir
-    ~metadata:[ ("command", `String (String.concat (prog :: args) ~sep:" ")) ] ;
+    ~metadata:[ ("command", `String (String.concat (prog :: args) ~sep:" "));
+    ("envs", `List (list))
+    ] ;
   Process.create_exn ~working_dir:dir ~prog ~args ?env ()
   >>= Process.collect_output_and_wait
 
