@@ -1,8 +1,6 @@
-let Prelude = ../External/Prelude.dhall
+let PromotePackages = ../Command/Promotion/PromotePackages.dhall
 
-let List/map = Prelude.List.map
-
-let PromotePackage = ../Command/PromotePackage.dhall
+let VerifyPackages = ../Command/Promotion/VerifyPackages.dhall
 
 let Package = ../Constants/DebianPackage.dhall
 
@@ -34,8 +32,8 @@ let promote_artifacts =
       ->  \(tag : Text)
       ->  \(remove_profile_from_name : Bool)
       ->  \(publish : Bool)
-      ->  let promote_packages =
-                PromotePackage.PromotePackagesSpec::{
+      ->  let promotePackages =
+                PromotePackages.PromotePackagesSpec::{
                 , debians = debians
                 , dockers = dockers
                 , version = version
@@ -51,17 +49,17 @@ let promote_artifacts =
                 , publish = publish
                 }
 
-          let debians_spec =
-                PromotePackage.promotePackagesToDebianSpec promote_packages
+          let debiansSpecs =
+                PromotePackages.promotePackagesToDebianSpecs promotePackages
 
-          let dockers_spec =
-                PromotePackage.promotePackagesToDockerSpec promote_packages
+          let dockersSpecs =
+                PromotePackages.promotePackagesToDockerSpecs promotePackages
 
           let pipelineType =
                 Pipeline.build
-                  ( PromotePackage.promotePipeline
-                      debians_spec
-                      dockers_spec
+                  ( PromotePackages.promotePipeline
+                      debiansSpecs
+                      dockersSpecs
                       DebianVersions.DebVersion.Bullseye
                       PipelineMode.Type.Stable
                   )
@@ -80,31 +78,31 @@ let verify_artifacts =
       ->  \(remove_profile_from_name : Bool)
       ->  \(publish : Bool)
       ->  let verify_packages =
-                PromotePackage.VerifyPackagesSpec::{
-                  promote_step_name = None Text
-                  , debians = debians
-                  , dockers = dockers
-                  , new_version = new_version
-                  , profile = profile
-                  , network = network
-                  , codenames = codenames
-                  , channel = to_channel
-                  , tag = tag
-                  , remove_profile_from_name = remove_profile_from_name
-                  , published = publish
+                VerifyPackages.VerifyPackagesSpec::{
+                , promote_step_name = None Text
+                , debians = debians
+                , dockers = dockers
+                , new_version = new_version
+                , profile = profile
+                , network = network
+                , codenames = codenames
+                , channel = to_channel
+                , tag = tag
+                , remove_profile_from_name = remove_profile_from_name
+                , published = publish
                 }
 
-          let debians_spec =
-                PromotePackage.verifyPackagesToDebianSpec verify_packages
+          let debiansSpecs =
+                VerifyPackages.verifyPackagesToDebianSpecs verify_packages
 
-          let dockers_spec =
-                PromotePackage.verifyPackagesToDockerSpec verify_packages
+          let dockersSpecs =
+                VerifyPackages.verifyPackagesToDockerSpecs verify_packages
 
           let pipelineType =
                 Pipeline.build
-                  ( PromotePackage.verifyPipeline
-                      debians_spec
-                      dockers_spec
+                  ( VerifyPackages.verifyPipeline
+                      debiansSpecs
+                      dockersSpecs
                       DebianVersions.DebVersion.Bullseye
                       PipelineMode.Type.Stable
                   )

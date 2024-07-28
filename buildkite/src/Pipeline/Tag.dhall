@@ -18,7 +18,6 @@ let Tag
       | Stable
       | Toolchain
       | Hardfork
-      | Stable
       >
 
 let toNatural

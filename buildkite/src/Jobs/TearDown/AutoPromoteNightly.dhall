@@ -1,11 +1,5 @@
 let S = ../../Lib/SelectFiles.dhall
 
-let RunInToolchain = ../../Command/RunInToolchain.dhall
-
-let Command = ../../Command/Base.dhall
-
-let Size = ../../Command/Size.dhall
-
 let DebianVersions = ../../Constants/DebianVersions.dhall
 
 let Artifacts = ../../Constants/Artifacts.dhall
@@ -20,14 +14,16 @@ let Profiles = ../../Constants/Profiles.dhall
 
 let JobSpec = ../../Pipeline/JobSpec.dhall
 
-let Pipeline = ../../Pipeline/Dsl.dhall
-
 let PipelineTag = ../../Pipeline/Tag.dhall
 
-let PromotePackage = ../../Command/PromotePackage.dhall
+let Pipeline = ../../Pipeline/Dsl.dhall
 
-let promote_packages =
-     PromotePackage.PromotePackagesSpec::{
+let PromotePackages = ../../Command/Promotion/PromotePackages.dhall
+
+let VerifyPackages = ../../Command/Promotion/VerifyPackages.dhall
+
+let promotePackages =
+      PromotePackages.PromotePackagesSpec::{
       , debians = [ DebianPackage.Type.Daemon, DebianPackage.Type.LogProc ]
       , dockers = [ Artifacts.Type.Daemon ]
       , version = "\\\$MINA_DEB_VERSION"
@@ -35,7 +31,11 @@ let promote_packages =
       , new_version = "\\\$MINA_DEB_VERSION"
       , profile = Profiles.Type.Standard
       , network = Network.Type.Devnet
-      , codenames = [ DebianVersions.DebVersion.Bullseye, DebianVersions.DebVersion.Focal, DebianVersions.DebVersion.Buster]
+      , codenames =
+        [ DebianVersions.DebVersion.Bullseye
+        , DebianVersions.DebVersion.Focal
+        , DebianVersions.DebVersion.Buster
+        ]
       , from_channel = DebianChannel.Type.Unstable
       , to_channel = DebianChannel.Type.Nightly
       , tag = "nightly"
@@ -43,27 +43,44 @@ let promote_packages =
       , publish = False
       }
 
-let promote_debians_spec =
-      PromotePackage.promotePackagesToDebianSpec promote_packages
+let verfiyPackages =
+      VerifyPackages.VerifyPackagesSpec::{
+      , promote_step_name = Some "AutoPromoteNightly"
+      , debians = [] : List DebianPackage.Type
+      , dockers = [] : List Artifacts.Type
+      , new_version = ""
+      , profile = Profiles.Type.Standard
+      , network = Network.Type.Mainnet
+      , codenames = [] : List DebianVersions.DebVersion
+      , channel = DebianChannel.Type.Nightly
+      , tag = ""
+      , remove_profile_from_name = False
+      , published = False
+      }
 
-let promote_dockers_spec =
-      PromotePackage.promotePackagesToDockerSpec promote_packages
+let promoteDebiansSpecs =
+      PromotePackages.promotePackagesToDebianSpecs promotePackages
 
-let verify_debians_spec =
-      PromotePackage.verifyPackagesToDebianSpec promote_packages
+let promoteDockersSpecs =
+      PromotePackages.promotePackagesToDockerSpecs promotePackages
 
-let verify_dockers_spec =
-      PromotePackage.verifyPackagesToDockerSpec promote_packages
+let verifyDebiansSpecs =
+      VerifyPackages.verifyPackagesToDebianSpecs verfiyPackages
+
+let verifyDockersSpecs =
+      VerifyPackages.verifyPackagesToDockerSpecs verfiyPackages
 
 in  Pipeline.build
       Pipeline.Config::{
       , spec = JobSpec::{
         , dirtyWhen = [ S.everything ]
         , path = "Test"
-        , tags = [ Pipeline.Type.AutoPromoteNightly ]
+        , tags = [ PipelineTag.Type.TearDown ]
         , name = "AutoPromoteNightly"
         }
       , steps =
-            promoteSteps promote_debians_spec promote_dockers_spec
-          # verificationSteps verify_debians_spec verify_dockers_spec
+            PromotePackages.promoteSteps promoteDebiansSpecs promoteDockersSpecs
+          # VerifyPackages.verificationSteps
+              verifyDebiansSpecs
+              verifyDockersSpecs
       }
