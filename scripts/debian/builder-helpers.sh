@@ -1,9 +1,9 @@
 #!/bin/bash
 
-BUILD_URL="local build from '$(hostname)' host"
-MINA_DEB_CODENAME="bullseye"
-MINA_DEB_VERSION="0.0-experimental"
-MINA_DEB_RELEASE="unstable"
+BUILD_URL=${BUILD_URL:-"local build from '$(hostname)' host"}
+MINA_DEB_CODENAME=${MINA_DEB_CODENAME:-"bullseye"}
+MINA_DEB_VERSION=${MINA_DEB_VERSION:-"0.0.0-experimental"}
+MINA_DEB_RELEASE=${MINA_DEB_RELEASE:-"unstable"}
 
 # Helper script to include when building deb archives.
 
@@ -63,7 +63,7 @@ case "${DUNE_PROFILE}" in
 esac
 
 
-#ADd suffix to debian to distinguish instrumented packages
+#Add suffix to debian to distinguish instrumented packages
 if [[ -v DUNE_INSTRUMENT_WITH ]]; then
     INSTRUMENTED_SUFFIX=instrumented
     MINA_DEB_NAME="${MINA_DEB_NAME}-${INSTRUMENTED_SUFFIX}"
