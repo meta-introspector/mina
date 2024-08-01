@@ -87,7 +87,7 @@ let build_artifacts
                                                               spec.artifacts
                                                               spec.networks}"
                 # [ Cmd.run
-                      "./scripts/debian/upload-to-gs.sh ${DebianVersions.lowerName
+                      "./buildkite/scripts/debian/upload-to-gs.sh ${DebianVersions.lowerName
                                                             spec.debVersion}"
                   ]
             , label =
