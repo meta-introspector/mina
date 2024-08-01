@@ -22,5 +22,6 @@ in  Pipeline.build
             ]
           , tags = [ PipelineTag.Type.Debian ]
           , channel = DebianChannel.Type.Experimental
+          , prefix = "MinaArtifactOnlyDebian"
           }
       )
