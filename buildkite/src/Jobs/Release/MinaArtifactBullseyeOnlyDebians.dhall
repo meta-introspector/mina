@@ -4,8 +4,6 @@ let Artifacts = ../../Constants/Artifacts.dhall
 
 let Pipeline = ../../Pipeline/Dsl.dhall
 
-let PipelineTag = ../../Pipeline/Tag.dhall
-
 in  Pipeline.build
       ( ArtifactPipelines.pipeline
           ArtifactPipelines.MinaBuildSpec::{
@@ -18,6 +16,6 @@ in  Pipeline.build
             , Artifacts.Type.ZkappTestTransaction
             , Artifacts.Type.FunctionalTestSuite
             ]
-          , tags = [ PipelineTag.Type.Long, PipelineTag.Type.Release, PipelineTag.Type.Docker ]
+          , tags = [ PipelineTag.Type.Debian ]
           }
       )

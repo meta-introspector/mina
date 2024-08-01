@@ -14,6 +14,8 @@ let Filter
       | AllTests
       | Release
       | HardforkPackageGeneration
+      | DebianBuild
+      | DockerBuild
       >
 
 let tags
@@ -25,6 +27,8 @@ let tags
             , Long = [ Tag.Type.Long ]
             , TearDownOnly = [ Tag.Type.TearDown ]
             , ToolchainsOnly = [ Tag.Type.Toolchain ]
+            , DebianBuild = [ Tag.Type.Debian ]
+            , DockerBuild = [ Tag.Type.Docker ]
             , AllTests =
               [ Tag.Type.Lint
               , Tag.Type.Release
