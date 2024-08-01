@@ -51,6 +51,8 @@ let show
             , TearDownOnly = "TearDownOnly"
             , AllTests = "AllTests"
             , Release = "Release"
+            , DebianBuild = "DebianBuild"
+            , DockerBuild = "DockerBuild"
             , HardforkPackageGeneration = "HardforkPackageGeneration"
             }
             filter

@@ -24,6 +24,8 @@ let DebianVersions = ../Constants/DebianVersions.dhall
 
 let DebianRepo = ../Constants/DebianRepo.dhall
 
+let DebianChannel = ../Constants/DebianChannel.dhall
+
 let Profiles = ../Constants/Profiles.dhall
 
 let Network = ../Constants/Network.dhall
@@ -45,6 +47,7 @@ let MinaBuildSpec =
           , toolchainSelectMode : Toolchain.SelectionMode
           , mode : PipelineMode.Type
           , tags : List PipelineTag.Type
+          , channel : DebianChannel.Type
           }
       , default =
           { prefix = "MinaArtifact"
@@ -56,6 +59,7 @@ let MinaBuildSpec =
           , toolchainSelectMode = Toolchain.SelectionMode.ByDebian
           , mode = PipelineMode.Type.PullRequest
           , tags = [ PipelineTag.Type.Long, PipelineTag.Type.Release ]
+          , channel = DebianChannel.Type.Unstable
           }
       }
 
@@ -84,7 +88,7 @@ let build_artifacts
                                                               spec.networks}"
                 # [ Cmd.run
                       "./buildkite/scripts/debian/upload-to-gs.sh ${DebianVersions.lowerName
-                                                                   spec.debVersion}"
+                                                                      spec.debVersion}"
                   ]
             , label =
                 "Build Mina for ${DebianVersions.capitalName
@@ -113,8 +117,9 @@ let publish_to_debian_repo =
                   , "AWS_SECRET_ACCESS_KEY"
                   , "MINA_DEB_CODENAME=${DebianVersions.lowerName
                                            spec.debVersion}"
+                  , "MINA_DEB_RELEASE=${DebianChannel.lowerName spec.channel}"
                   ]
-                  "./buildkite/scripts/publish-deb.sh"
+                  "./buildkite/scripts/debian/publish.sh"
             , label =
                 "Publish Mina for ${DebianVersions.capitalName
                                       spec.debVersion} ${Profiles.toSuffixUppercase
@@ -128,7 +133,6 @@ let publish_to_debian_repo =
                   "build"
             , target = Size.Small
             }
-
 
 let docker_step
     :     Artifacts.Type

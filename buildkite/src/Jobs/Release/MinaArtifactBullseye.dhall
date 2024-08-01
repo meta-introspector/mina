@@ -18,6 +18,10 @@ in  Pipeline.build
             , Artifacts.Type.ZkappTestTransaction
             , Artifacts.Type.FunctionalTestSuite
             ]
-          , tags = [ PipelineTag.Type.Long, PipelineTag.Type.Release, PipelineTag.Type.Docker ]
+          , tags =
+            [ PipelineTag.Type.Long
+            , PipelineTag.Type.Release
+            , PipelineTag.Type.Docker
+            ]
           }
       )

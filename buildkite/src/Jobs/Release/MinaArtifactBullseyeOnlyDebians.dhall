@@ -4,6 +4,10 @@ let Artifacts = ../../Constants/Artifacts.dhall
 
 let Pipeline = ../../Pipeline/Dsl.dhall
 
+let PipelineTag = ../../Pipeline/Tag.dhall
+
+let DebianChannel = ../../Constants/DebianChannel.dhall
+
 in  Pipeline.build
       ( ArtifactPipelines.pipeline
           ArtifactPipelines.MinaBuildSpec::{
@@ -17,5 +21,6 @@ in  Pipeline.build
             , Artifacts.Type.FunctionalTestSuite
             ]
           , tags = [ PipelineTag.Type.Debian ]
+          , channel = DebianChannel.Type.Experimental
           }
       )
