@@ -125,7 +125,7 @@ let pipeline
                             )
                             "./buildkite/scripts/build-hardfork-package.sh"
                         # [ Cmd.run
-                              "./buildkite/scripts/upload-deb-to-gs.sh ${DebianVersions.lowerName
+                              "./buildkite/scripts/debian/upload-to-gs.sh ${DebianVersions.lowerName
                                                                            debVersion}"
                           ]
                     , label =

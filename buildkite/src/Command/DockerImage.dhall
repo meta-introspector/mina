@@ -75,7 +75,7 @@ let generateStep =
                 ++  " --repo ${spec.repo}"
                 ++  " --extra-args \\\"${spec.extra_args}\\\""
 
-          let releaseDockerCmd = 
+          let releaseDockerCmd =
                     "./scripts/docker/release.sh"
                 ++  " --service ${spec.service}"
                 ++  " --version ${spec.version}"
@@ -88,7 +88,7 @@ let generateStep =
                 ++  " --deb-build-flags ${BuildFlags.lowerName
                                             spec.build_flags}"
                 ++  " --repo ${spec.repo}"
-                
+
           let commands =
                 merge
                   { PackagesO1Test =
