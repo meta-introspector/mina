@@ -144,7 +144,7 @@ let pipeline
                           , "MINA_DEB_CODENAME=${DebianVersions.lowerName
                                                    debVersion}"
                           ]
-                          "./buildkite/scripts/publish-deb.sh"
+                          "./buildkite/scripts/debian/publish.sh"
                     , label =
                         "Publish Mina for ${DebianVersions.capitalName
                                               debVersion} Hardfork"

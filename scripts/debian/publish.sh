@@ -57,7 +57,7 @@ for i in {1..10}; do (
     --component "${DEB_RELEASE}" \
     --codename "${DEB_CODENAME}" \
     "${DEB_NAMES}"
-) && break || scripts/clear-deb-s3-lockfile.sh; done
+) && break || scripts/debian/clear-s3-lockfile.sh; done
 
 # Verify integrity of debs on remote repo
 function verify_o1test_repo_has_package {
