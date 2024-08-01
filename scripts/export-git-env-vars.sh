@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+set -x
+
 echo "Exporting Git Variables: "
 
 function find_most_recent_numeric_tag() {
