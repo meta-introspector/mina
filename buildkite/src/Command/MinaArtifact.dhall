@@ -87,8 +87,8 @@ let build_artifacts
                                                               spec.artifacts
                                                               spec.networks}"
                 # [ Cmd.run
-                      "./buildkite/scripts/debian/upload-to-gs.sh ${DebianVersions.lowerName
-                                                                      spec.debVersion}"
+                      "./scripts/debian/upload-to-gs.sh ${DebianVersions.lowerName
+                                                            spec.debVersion}"
                   ]
             , label =
                 "Build Mina for ${DebianVersions.capitalName
@@ -308,28 +308,48 @@ let docker_commands
                 )
                 flattened_docker_steps
 
+let pipelineBuilder
+    : MinaBuildSpec.Type -> List Command.Type -> Pipeline.Config.Type
+    =     \(spec : MinaBuildSpec.Type)
+      ->  \(steps : List Command.Type)
+      ->  Pipeline.Config::{
+          , spec = JobSpec::{
+            , dirtyWhen = DebianVersions.dirtyWhen spec.debVersion
+            , path = "Release"
+            , name =
+                "${spec.prefix}${DebianVersions.capitalName
+                                   spec.debVersion}${Profiles.toSuffixUppercase
+                                                       spec.profile}${BuildFlags.toSuffixUppercase
+                                                                        spec.buildFlags}"
+            , tags = spec.tags
+            , mode = spec.mode
+            }
+          , steps = steps
+          }
+
+let onlyDebianPipeline
+    : MinaBuildSpec.Type -> Pipeline.Config.Type
+    =     \(spec : MinaBuildSpec.Type)
+      ->  pipelineBuilder
+            spec
+            [ Libp2p.step spec.debVersion spec.buildFlags
+            , build_artifacts spec
+            , publish_to_debian_repo spec
+            ]
+
 let pipeline
     : MinaBuildSpec.Type -> Pipeline.Config.Type
     =     \(spec : MinaBuildSpec.Type)
-      ->  let steps =
-                [ Libp2p.step spec.debVersion spec.buildFlags
+      ->  pipelineBuilder
+            spec
+            (   [ Libp2p.step spec.debVersion spec.buildFlags
                 , build_artifacts spec
                 , publish_to_debian_repo spec
                 ]
+              # docker_commands spec
+            )
 
-          in  Pipeline.Config::{
-              , spec = JobSpec::{
-                , dirtyWhen = DebianVersions.dirtyWhen spec.debVersion
-                , path = "Release"
-                , name =
-                    "${spec.prefix}${DebianVersions.capitalName
-                                       spec.debVersion}${Profiles.toSuffixUppercase
-                                                           spec.profile}${BuildFlags.toSuffixUppercase
-                                                                            spec.buildFlags}"
-                , tags = spec.tags
-                , mode = spec.mode
-                }
-              , steps = steps # docker_commands spec
-              }
-
-in  { pipeline = pipeline, MinaBuildSpec = MinaBuildSpec }
+in  { pipeline = pipeline
+    , onlyDebianPipeline = onlyDebianPipeline
+    , MinaBuildSpec = MinaBuildSpec
+    }

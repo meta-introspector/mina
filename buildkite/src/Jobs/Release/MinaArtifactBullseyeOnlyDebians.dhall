@@ -9,7 +9,7 @@ let PipelineTag = ../../Pipeline/Tag.dhall
 let DebianChannel = ../../Constants/DebianChannel.dhall
 
 in  Pipeline.build
-      ( ArtifactPipelines.pipeline
+      ( ArtifactPipelines.onlyDebianPipeline
           ArtifactPipelines.MinaBuildSpec::{
           , artifacts =
             [ Artifacts.Type.Daemon
