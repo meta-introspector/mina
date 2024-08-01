@@ -5,6 +5,7 @@
 set -eo pipefail
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+source ${SCRIPTPATH}/../export-git-env-vars.sh
 source ${SCRIPTPATH}/builder-helpers.sh
   
 if [ $# -eq 0 ]
