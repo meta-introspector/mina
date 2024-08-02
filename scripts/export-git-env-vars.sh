@@ -5,6 +5,8 @@ set -x
 
 echo "Exporting Git Variables: "
 
+git fetch
+
 function find_most_recent_numeric_tag() {
     # We use the --prune flag because we've had problems with buildkite agents getting conflicting results here
     git fetch --tags --prune --prune-tags --force
@@ -24,3 +26,5 @@ export MINA_DEB_VERSION="${GITTAG}-${GITBRANCH}-${GITHASH}"
 export MINA_DOCKER_TAG="$(echo "${MINA_DEB_VERSION}-${MINA_DEB_CODENAME}" | sed 's!/!-!g; s!_!-!g')"
 
 [[ -n ${THIS_COMMIT_TAG} ]] && export MINA_COMMIT_TAG="${THIS_COMMIT_TAG}"
+
+echo "after commit tag"
