@@ -1,3 +1,7 @@
+let Prelude = ../External/Prelude.dhall
+
+let Optional/default = Prelude.Optional.default
+
 let Profiles = ./Profiles.dhall
 
 let BuildFlags = ./BuildFlags.dhall
@@ -29,13 +33,14 @@ let lowerName =
             debVersion
 
 let dependsOnStep =
-          \(debVersion : DebVersion)
+          \(prefix : Optional Text)
+      ->  \(debVersion : DebVersion)
       ->  \(profile : Profiles.Type)
       ->  \(buildFlag : BuildFlags.Type)
       ->  \(step : Text)
       ->  let profileSuffix = Profiles.toSuffixUppercase profile
 
-          let prefix = "MinaArtifact"
+          let prefix = Optional/default Text "MinaArtifact" prefix
 
           in  merge
                 { Bookworm =
@@ -83,7 +88,12 @@ let dependsOnStep =
 let dependsOn =
           \(debVersion : DebVersion)
       ->  \(profile : Profiles.Type)
-      ->  dependsOnStep debVersion profile BuildFlags.Type.None "build"
+      ->  dependsOnStep
+            (None Text)
+            debVersion
+            profile
+            BuildFlags.Type.None
+            "build"
 
 let minimalDirtyWhen =
       [ S.exactly "buildkite/src/Constants/DebianVersions" "dhall"
