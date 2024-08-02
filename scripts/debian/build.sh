@@ -2,7 +2,7 @@
 
 # Script collects binaries and keys and builds deb archives.
 
-set -eo pipefail
+set -eox pipefail
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source ${SCRIPTPATH}/../export-git-env-vars.sh
