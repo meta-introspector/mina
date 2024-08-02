@@ -71,7 +71,7 @@ let promoteDockerStep =
                 Command.Config::{
                 , commands =
                   [ Cmd.run
-                      "source ./buildkite/scripts/export-git-env-vars.sh && ./buildkite/scripts/promote-docker.sh --name ${Artifact.dockerName
+                      ". ./buildkite/scripts/export-git-env-vars.sh && ./buildkite/scripts/promote-docker.sh --name ${Artifact.dockerName
                                                                         spec.name} --version ${old_tag} --tag ${new_tag} ${publish}"
                   ]
                 , label = "Docker: ${spec.step_key}"

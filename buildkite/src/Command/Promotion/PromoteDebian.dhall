@@ -73,7 +73,7 @@ let promoteDebianStep =
                     Toolchain.runner
                       DebianVersions.DebVersion.Bullseye
                       [ "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY" ]
-                      "source ./buildkite/scripts/export-git-env-vars.sh && ./buildkite/scripts/promote-deb.sh --package ${package_name} --version ${spec.version}  --new-version ${spec.new_version}  --architecture ${spec.architecture}  --codename ${DebianVersions.lowerName
+                      ". ./buildkite/scripts/export-git-env-vars.sh && ./buildkite/scripts/promote-deb.sh --package ${package_name} --version ${spec.version}  --new-version ${spec.new_version}  --architecture ${spec.architecture}  --codename ${DebianVersions.lowerName
                                                                                                                                                                                                       spec.codename}  --from-component ${DebianChannel.lowerName
                                                                                                                                                                                                                                            spec.from_channel}  --to-component ${DebianChannel.lowerName
                                                                                                                                                                                                                                                                                   spec.to_channel} ${new_name}"
