@@ -8,8 +8,6 @@ let DebianPackage = ../../Constants/DebianPackage.dhall
 
 let DebianChannel = ../../Constants/DebianChannel.dhall
 
-let Cmd = ../../Lib/Cmds.dhall
-
 let Network = ../../Constants/Network.dhall
 
 let Profiles = ../../Constants/Profiles.dhall
@@ -26,11 +24,12 @@ let VerifyPackages = ../../Command/Promotion/VerifyPackages.dhall
 
 let promotePackages =
       PromotePackages.PromotePackagesSpec::{
-      , debians = [ DebianPackage.Type.Daemon 
-                    , DebianPackage.Type.LogProc
-                    , DebianPackage.Type.Archive
-                  ]
-      , dockers = [ Artifacts.Type.Daemon , Artifacts.Type.Archive ]
+      , debians =
+        [ DebianPackage.Type.Daemon
+        , DebianPackage.Type.LogProc
+        , DebianPackage.Type.Archive
+        ]
+      , dockers = [ Artifacts.Type.Daemon, Artifacts.Type.Archive ]
       , version = "\\\$MINA_DEB_VERSION"
       , architecture = "amd64"
       , new_version = "\\\$CURRENT_DATE"
@@ -51,15 +50,17 @@ let promotePackages =
 let verifyPackages =
       VerifyPackages.VerifyPackagesSpec::{
       , promote_step_name = Some "AutoPromoteNightly"
-      , debians = [ DebianPackage.Type.Daemon 
-                    , DebianPackage.Type.LogProc
-                    , DebianPackage.Type.Archive
-                  ]
-      , dockers = [ Artifacts.Type.Daemon , Artifacts.Type.Archive ]
+      , debians =
+        [ DebianPackage.Type.Daemon
+        , DebianPackage.Type.LogProc
+        , DebianPackage.Type.Archive
+        ]
+      , dockers = [ Artifacts.Type.Daemon, Artifacts.Type.Archive ]
       , new_version = "\\\$CURRENT_DATE"
       , profile = Profiles.Type.Standard
       , network = Network.Type.Devnet
-      , codenames = [ DebianVersions.DebVersion.Bullseye
+      , codenames =
+        [ DebianVersions.DebVersion.Bullseye
         , DebianVersions.DebVersion.Focal
         , DebianVersions.DebVersion.Buster
         ]
@@ -90,7 +91,7 @@ in  Pipeline.build
         , name = "AutoPromoteNightly"
         }
       , steps =
-          PromotePackages.promoteSteps promoteDebiansSpecs promoteDockersSpecs
+            PromotePackages.promoteSteps promoteDebiansSpecs promoteDockersSpecs
           # VerifyPackages.verificationSteps
               verifyDebiansSpecs
               verifyDockersSpecs
