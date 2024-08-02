@@ -22,13 +22,16 @@ let PromotePackages = ../../Command/Promotion/PromotePackages.dhall
 
 let VerifyPackages = ../../Command/Promotion/VerifyPackages.dhall
 
-let promotePackages =
+let promoteStandardPackages =
       PromotePackages.PromotePackagesSpec::{
-      , debians = [ DebianPackage.Type.Daemon, DebianPackage.Type.LogProc ]
-      , dockers = [ Artifacts.Type.Daemon ]
+      , debians = [ DebianPackage.Type.Daemon 
+                    , DebianPackage.Type.LogProc
+                    , DebianPackage.Type.Archive
+                  ]
+      , dockers = [ Artifacts.Type.Daemon , Artifacts.Type.Archive ]
       , version = "\\\$MINA_DEB_VERSION"
       , architecture = "amd64"
-      , new_version = "\\\$MINA_DEB_VERSION"
+      , new_version = "\\\$CURRENT_DATE"
       , profile = Profiles.Type.Standard
       , network = Network.Type.Devnet
       , codenames =
@@ -43,18 +46,24 @@ let promotePackages =
       , publish = False
       }
 
-let verfiyPackages =
+let verifyPackages =
       VerifyPackages.VerifyPackagesSpec::{
       , promote_step_name = Some "AutoPromoteNightly"
-      , debians = [] : List DebianPackage.Type
-      , dockers = [] : List Artifacts.Type
-      , new_version = ""
+      , debians = [ DebianPackage.Type.Daemon 
+                    , DebianPackage.Type.LogProc
+                    , DebianPackage.Type.Archive
+                  ]
+      , dockers = [ Artifacts.Type.Daemon , Artifacts.Type.Archive ]
+      , new_version = "\\\$CURRENT_DATE"
       , profile = Profiles.Type.Standard
-      , network = Network.Type.Mainnet
-      , codenames = [] : List DebianVersions.DebVersion
+      , network = Network.Type.Devnet
+      , codenames = [ DebianVersions.DebVersion.Bullseye
+        , DebianVersions.DebVersion.Focal
+        , DebianVersions.DebVersion.Buster
+        ]
       , channel = DebianChannel.Type.Nightly
-      , tag = ""
-      , remove_profile_from_name = False
+      , tag = "\\\$MINA_DOCKER_TAG"
+      , remove_profile_from_name = True
       , published = False
       }
 
@@ -65,21 +74,22 @@ let promoteDockersSpecs =
       PromotePackages.promotePackagesToDockerSpecs promotePackages
 
 let verifyDebiansSpecs =
-      VerifyPackages.verifyPackagesToDebianSpecs verfiyPackages
+      VerifyPackages.verifyPackagesToDebianSpecs verifyPackages
 
 let verifyDockersSpecs =
-      VerifyPackages.verifyPackagesToDockerSpecs verfiyPackages
+      VerifyPackages.verifyPackagesToDockerSpecs verifyPackages
 
 in  Pipeline.build
       Pipeline.Config::{
       , spec = JobSpec::{
         , dirtyWhen = [ S.everything ]
-        , path = "Test"
+        , path = "TearDown"
         , tags = [ PipelineTag.Type.TearDown ]
         , name = "AutoPromoteNightly"
         }
       , steps =
-            PromotePackages.promoteSteps promoteDebiansSpecs promoteDockersSpecs
+          [Cmd.run "export CURRENT_DATE=$(date +'%Y%m%d')"]
+          # PromotePackages.promoteSteps promoteDebiansSpecs promoteDockersSpecs
           # VerifyPackages.verificationSteps
               verifyDebiansSpecs
               verifyDockersSpecs
