@@ -88,7 +88,10 @@ in  Pipeline.build
         , name = "AutoPromoteNightly"
         }
       , steps =
-          [Cmd.run "export CURRENT_DATE=$(date +'%Y%m%d')"]
+          [ Cmd.run "export CURRENT_DATE=$(date +'%Y%m%d')"
+            , Cmd.run "export MINA_DEB_VERSION=3.0.0-dkijania-merge-compatible-to-develop-0208-2c854c1"
+            , Cmd.run "export MINA_DOCKER_TAG=3.0.0-dkijania-merge-compatible-to-develop-0208-2c854c1"
+          ]
           # PromotePackages.promoteSteps promoteDebiansSpecs promoteDockersSpecs
           # VerifyPackages.verificationSteps
               verifyDebiansSpecs
