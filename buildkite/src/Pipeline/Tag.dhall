@@ -18,7 +18,7 @@ let Tag
       | Stable
       | Toolchain
       | Hardfork
-      | Promtoe
+      | Promote
       >
 
 let toNatural
