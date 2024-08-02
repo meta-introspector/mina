@@ -54,12 +54,12 @@ let VerifyPackagesSpec =
           { promote_step_name = None
           , debians = [] : List Package.Type
           , dockers = [] : List Artifact.Type
-          , new_version = ""
+          , new_version = "\\\\$MINA_DEB_VERSION"
           , profile = Profiles.Type.Standard
           , network = Network.Type.Mainnet
           , codenames = [] : List DebianVersions.DebVersion
           , channel = DebianChannel.Type.Nightly
-          , tag = ""
+          , tag = "\\\\$MINA_DOCKER_TAG"
           , remove_profile_from_name = False
           , published = False
           }

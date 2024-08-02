@@ -30,7 +30,7 @@ let promoteDebianVerificationStep =
                 Command.Config::{
                 , commands =
                   [ Cmd.run
-                      "./scripts/debian/verify.sh --package ${name} --version ${spec.new_version} --codename ${DebianVersions.lowerName
+                      "source buildkite/scripts/export-git-env-vars.sh && ./scripts/debian/verify.sh --package ${name} --version ${spec.new_version} --codename ${DebianVersions.lowerName
                                                                                                                  spec.codename}  --channel ${DebianChannel.lowerName
                                                                                                                                                spec.to_channel}"
                   ]

@@ -48,6 +48,8 @@ if [ -z "$AWS_ACCESS_KEY_ID" ]; then
     exit 0
 fi
 
+source buildkite/scripts/export-git-env-vars.sh
+
 echo "Promoting debs: ${PACKAGE}_${VERSION} to Release: ${TO_COMPONENT} and Codename: ${CODENAME}"
 # Promote the deb .
 # If this fails, attempt to remove the lockfile and retry.

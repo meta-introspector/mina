@@ -8,6 +8,8 @@ let DebianPackage = ../../Constants/DebianPackage.dhall
 
 let DebianChannel = ../../Constants/DebianChannel.dhall
 
+let Cmd = ../../Lib/Cmds.dhall
+
 let Network = ../../Constants/Network.dhall
 
 let Profiles = ../../Constants/Profiles.dhall
@@ -22,7 +24,7 @@ let PromotePackages = ../../Command/Promotion/PromotePackages.dhall
 
 let VerifyPackages = ../../Command/Promotion/VerifyPackages.dhall
 
-let promoteStandardPackages =
+let promotePackages =
       PromotePackages.PromotePackagesSpec::{
       , debians = [ DebianPackage.Type.Daemon 
                     , DebianPackage.Type.LogProc
@@ -88,11 +90,7 @@ in  Pipeline.build
         , name = "AutoPromoteNightly"
         }
       , steps =
-          [ Cmd.run "export CURRENT_DATE=$(date +'%Y%m%d')"
-            , Cmd.run "export MINA_DEB_VERSION=3.0.0-dkijania-merge-compatible-to-develop-0208-2c854c1"
-            , Cmd.run "export MINA_DOCKER_TAG=3.0.0-dkijania-merge-compatible-to-develop-0208-2c854c1"
-          ]
-          # PromotePackages.promoteSteps promoteDebiansSpecs promoteDockersSpecs
+          PromotePackages.promoteSteps promoteDebiansSpecs promoteDockersSpecs
           # VerifyPackages.verificationSteps
               verifyDebiansSpecs
               verifyDockersSpecs
