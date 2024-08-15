@@ -3,4 +3,4 @@
  (public_name inline_test_quiet_logs)
  (libraries ppx_inline_test.runtime-lib)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version)))
+ (preprocess (pps ppx_mina_introspector ppx_version)))

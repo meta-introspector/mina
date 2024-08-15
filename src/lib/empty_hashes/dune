@@ -2,7 +2,7 @@
  (name empty_hashes)
  (public_name empty_hashes)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_version ppx_mina_introspector))
  (library_flags (-linkall))
  (libraries core_kernel immutable_array base)
 )

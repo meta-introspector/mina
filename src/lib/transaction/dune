@@ -42,4 +42,5 @@
     ppx_deriving_yojson
     ppx_hash
     ppx_sexp_conv
+    ppx_mina_introspector
     ppx_version)))

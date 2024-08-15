@@ -72,6 +72,6 @@
    mina_runtime_config
  )
  (preprocess
-  (pps ppx_mina ppx_version ppx_jane ppx_register_event))
+  (pps ppx_mina ppx_version ppx_jane ppx_register_event ppx_mina_introspector))
  (instrumentation (backend bisect_ppx))
  (synopsis "Coda block producer"))

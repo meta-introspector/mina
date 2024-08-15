@@ -8,4 +8,4 @@
    ctypes.stubs
 )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version)))
+ (preprocess (pps ppx_version ppx_mina_introspector)))

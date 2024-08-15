@@ -69,6 +69,7 @@ module On_conflict = struct
     create `blocks_snark_jobs_block_id_snark_job_id_key []
 end
 
+(*import model*)
 type bit = Yojson.Basic.t
 
 type user_command_type = Yojson.Basic.t

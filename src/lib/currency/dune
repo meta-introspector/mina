@@ -36,6 +36,7 @@
  )
  (preprocess
   (pps
+  ppx_mina_introspector
    ppx_annot
    ppx_mina
    ppx_version

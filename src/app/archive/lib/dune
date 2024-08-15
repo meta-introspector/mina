@@ -21,6 +21,9 @@
    integers
    ppx_inline_test.config
    uri
+   yojson
+   ppx_deriving_yojson.runtime
+
    ;;local libraries
    bounded_types
    mina_wire_types
@@ -73,11 +76,10 @@
    mina_version
    staged_ledger_diff
    error_json
-   ppx_deriving_yojson.runtime
    ppx_version.runtime
    o1trace
  )
  (inline_tests (flags -verbose -show-counts))
  (modes native)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_mina ppx_version ppx_jane ppx_custom_printf ppx_deriving_yojson h_list.ppx)))
+ (preprocess (pps ppx_mina ppx_mina_introspector ppx_version ppx_jane ppx_custom_printf ppx_deriving_yojson h_list.ppx )))

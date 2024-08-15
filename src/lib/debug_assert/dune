@@ -2,7 +2,7 @@
  (name debug_assert)
  (public_name debug_assert)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_version ppx_mina_introspector))
  (libraries async_kernel)
  (synopsis "Debug assertion library")
 )

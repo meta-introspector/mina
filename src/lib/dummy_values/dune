@@ -12,7 +12,7 @@
 )
  (ppx_runtime_libraries base)
  (preprocess
-  (pps ppx_version ppx_jane ppxlib.metaquot))
+  (pps ppx_version ppx_jane ppxlib.metaquot ppx_mina_introspector))
  (instrumentation (backend bisect_ppx)))
 
 (rule

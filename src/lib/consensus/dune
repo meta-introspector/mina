@@ -94,6 +94,7 @@
     ppx_let
     ppx_sexp_conv
     ppx_snarky
+    ppx_mina_introspector
     ppx_version))
  (instrumentation (backend bisect_ppx))
  (synopsis "Consensus mechanisms"))
@@ -103,6 +104,6 @@
  (modules proof_of_stake_fuzzer)
  (libraries core_kernel signature_lib mina_state mina_block consensus prover blockchain_snark logger.file_system)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppx_jane))
+ (preprocess (pps ppx_version ppx_jane ppx_mina_introspector))
  (enabled_if false) ;; Compilation is disabled until this executable has been fixed.
 )

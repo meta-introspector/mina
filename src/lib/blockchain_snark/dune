@@ -40,6 +40,6 @@
  )
  (inline_tests (flags -verbose -show-counts))
  (preprocess
-  (pps ppx_snarky ppx_mina ppx_version ppx_jane ppx_compare))
+  (pps ppx_snarky ppx_mina ppx_version ppx_jane ppx_compare ppx_mina_introspector))
  (instrumentation (backend bisect_ppx))
  (synopsis "blockchain state transition snarking library"))

@@ -14,5 +14,5 @@
    base58_check
    )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppx_jane ppx_deriving_yojson))
+ (preprocess (pps ppx_version ppx_jane ppx_deriving_yojson ppx_mina_introspector))
  (synopsis "Extension of Yojson to make it easy for a type to derive yojson"))

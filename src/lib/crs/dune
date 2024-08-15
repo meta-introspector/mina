@@ -2,7 +2,7 @@
  (name crs)
  (public_name crs)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_version ppx_mina_introspector))
  (library_flags -linkall)
  (libraries digestif)
  (synopsis "Common random string generation library"))

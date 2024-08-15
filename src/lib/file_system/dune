@@ -11,6 +11,6 @@
    base.caml
  )
  (preprocess
-  (pps ppx_version ppx_jane))
+  (pps ppx_version ppx_jane ppx_mina_introspector))
  (instrumentation (backend bisect_ppx))
  (synopsis "Interface to make system calls to the Unix file system"))

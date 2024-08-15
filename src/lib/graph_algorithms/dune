@@ -4,4 +4,4 @@
  (inline_tests (flags -verbose -show-counts))
  (libraries core_kernel ppx_inline_test.config)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppx_deriving.std ppx_jane)))
+ (preprocess (pps ppx_mina_introspector ppx_version ppx_deriving.std ppx_jane)))

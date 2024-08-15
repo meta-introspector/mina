@@ -47,6 +47,6 @@
   ppx_version.runtime
   gossip_net)
  (preprocess
-  (pps ppx_version ppx_jane ppx_deriving_yojson ppx_deriving.make))
+  (pps ppx_version ppx_jane ppx_deriving_yojson ppx_deriving.make ppx_mina_introspector))
  (instrumentation (backend bisect_ppx))
  (synopsis "Library to communicate with Mina as cli as the front-end"))

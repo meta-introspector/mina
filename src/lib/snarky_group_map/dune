@@ -2,7 +2,7 @@
  (name snarky_group_map)
  (public_name snarky_group_map)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppx_jane ppx_compare))
+ (preprocess (pps ppx_version ppx_jane ppx_compare ppx_mina_introspector))
  (inline_tests (flags -verbose -show-counts))
  (libraries
    ;; opam libraries

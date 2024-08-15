@@ -15,4 +15,4 @@
    mina_node_config
    )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_mina ppx_version ppx_base ppx_let ppx_custom_printf ppx_inline_test)))
+ (preprocess (pps ppx_mina ppx_version ppx_base ppx_let ppx_custom_printf ppx_inline_test ppx_mina_introspector)))

@@ -30,12 +30,13 @@
    base58_check
    snarky.intf
    fields_derivers.zkapps
+   ppx_mina_introspector
    fields_derivers.json
    test_util
    ppx_version.runtime
    mina_wire_types
  )
  (preprocess
-  (pps ppx_mina ppx_version ppx_snarky ppx_let ppx_inline_test ppx_sexp_conv ppx_compare ppx_hash))
+  (pps ppx_mina ppx_version ppx_snarky ppx_let ppx_inline_test ppx_sexp_conv ppx_compare ppx_hash ppx_mina_introspector))
  (instrumentation (backend bisect_ppx))
  (synopsis "Data hash"))

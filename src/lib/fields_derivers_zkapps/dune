@@ -30,7 +30,10 @@
  (instrumentation (backend bisect_ppx))
  (preprocess
   (pps
+  
+  ppx_mina_introspector
    ppx_annot
+   ppx_mina_introspector
    ppx_deriving_yojson
    ppx_base
    ppx_fields_conv

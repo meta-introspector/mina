@@ -42,4 +42,4 @@
   (re_export consensus_graphql)
  )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_jane ppx_version ppx_compare ppx_deriving_yojson)))
+ (preprocess (pps ppx_mina_introspector ppx_jane ppx_version ppx_compare ppx_deriving_yojson)))

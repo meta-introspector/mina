@@ -12,6 +12,6 @@
    fold_lib
 )
  (preprocess
-  (pps ppx_version ppx_jane))
+  (pps ppx_version ppx_jane ppx_mina_introspector))
  (instrumentation (backend bisect_ppx))
  (synopsis "Bignum's bigint re-exported as Bignum_bigint"))

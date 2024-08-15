@@ -31,6 +31,7 @@
  )
  (instrumentation (backend bisect_ppx))
  (preprocess (pps
+ ppx_mina_introspector
                ppx_mina ppx_version ppx_bin_prot ppx_compare ppx_hash
                ppx_fields_conv ppx_compare ppx_deriving.ord
                ppx_sexp_conv ppx_let ppx_custom_printf ppx_deriving_yojson

@@ -4,6 +4,6 @@
  (library_flags -linkall)
  (libraries core_kernel sexplib0)
  (preprocess
-  (pps ppx_version ppx_jane ppx_compare))
+  (pps ppx_version ppx_jane ppx_compare ppx_mina_introspector))
  (instrumentation (backend bisect_ppx))
  (synopsis "Representation of direction in a binary tree"))

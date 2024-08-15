@@ -44,7 +44,7 @@
    ppx_version.runtime
  )
  (preprocess
-  (pps ppx_version ppx_jane ppx_deriving_yojson ppx_compare ppx_deriving.make
+  (pps ppx_version ppx_jane ppx_deriving_yojson ppx_compare ppx_deriving.make ppx_mina_introspector
  ))
  (instrumentation (backend bisect_ppx))
  (synopsis "Lib powering the client interactions with the daemon"))

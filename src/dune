@@ -1,5 +1,4 @@
 (include dune.flags.inc)
-
 (rule
  (targets config.mlh)
  (mode promote)
