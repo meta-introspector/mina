@@ -1,0 +1,6 @@
+
+#+begin_src shell
+dune build  --verbose --only-packages=archive_lib,ppx_mina,o1trace,ppx_version,error_json,h_list,ppx_to_enum,ppx_register_event,ppx_representatives
+#+end_src
+
+
