@@ -20,4 +20,4 @@
    bounded_types
  )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_mina ppx_version ppx_let)))
+ (preprocess (pps ppx_mina_introspector ppx_mina ppx_version ppx_let)))

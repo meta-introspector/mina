@@ -16,4 +16,4 @@
    core_kernel
    ppx_version.runtime
    bin_prot)
- (preprocess (pps ppx_compare ppxlib.metaquot)))
+ (preprocess (pps  ppx_compare ppxlib.metaquot)))

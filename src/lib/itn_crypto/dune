@@ -15,5 +15,5 @@
    codable
  )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_jane ppx_version ppx_inline_test)))
+ (preprocess (pps ppx_mina_introspector ppx_jane ppx_version ppx_inline_test)))
 

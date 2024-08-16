@@ -3,7 +3,7 @@
  (libraries
    blockchain_snark)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version)))
+ (preprocess (pps ppx_mina_introspector ppx_version)))
 
 (rule
  (deps print_blockchain_snark_vk.exe)

@@ -6,7 +6,7 @@
   -open Pickles_graphql
   )
  (package graphql_lib)
- (preprocess (pps ppx_jane))
+ (preprocess (pps ppx_mina_introspector ppx_jane))
  (libraries
    ; opam libraries
   alcotest

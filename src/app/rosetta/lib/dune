@@ -57,7 +57,7 @@
  (instrumentation
   (backend bisect_ppx))
  (preprocess
-  (pps
+  (pps ppx_mina_introspector
    ppx_mina
    ppx_compare
    ppx_deriving.show

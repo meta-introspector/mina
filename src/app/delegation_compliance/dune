@@ -40,5 +40,5 @@
    bounded_types
  )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_mina ppx_version ppx_let ppx_sexp_conv ppx_deriving.show
+ (preprocess (pps ppx_mina_introspector ppx_mina ppx_version ppx_let ppx_sexp_conv ppx_deriving.show
                   ppx_hash ppx_compare ppx_deriving_yojson h_list.ppx)))

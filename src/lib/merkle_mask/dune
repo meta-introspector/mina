@@ -43,7 +43,7 @@
   visualization
   )
  (preprocess
-  (pps
+  (pps ppx_mina_introspector
    ppx_compare
    ppx_deriving.show
    ppx_deriving_yojson

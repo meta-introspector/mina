@@ -2,6 +2,6 @@
  (name web_request)
  (public_name web_request)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_mina_introspector ppx_version))
  (libraries core async core_kernel base async_kernel async_unix)
  (synopsis "Web tools that are used to send put requests"))

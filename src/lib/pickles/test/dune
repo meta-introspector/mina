@@ -4,7 +4,7 @@
   (:standard -warn-error +a)
   -open Core_kernel
   -open Pickles)
- (preprocess (pps ppx_jane))
+ (preprocess (pps ppx_mina_introspector ppx_jane))
  (package pickles)
  (libraries
   ; Opam libraries

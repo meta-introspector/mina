@@ -19,6 +19,6 @@
    ppx_version.runtime
  )
  (preprocess
-  (pps ppx_jane ppx_deriving_yojson ppx_version))
+  (pps ppx_mina_introspector ppx_jane ppx_deriving_yojson ppx_version))
  (instrumentation (backend bisect_ppx))
  (synopsis "Snark work types"))

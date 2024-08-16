@@ -46,4 +46,4 @@
    error_json
  )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppx_mina ppx_let ppx_hash ppx_compare ppx_sexp_conv h_list.ppx)))
+ (preprocess (pps ppx_mina_introspector ppx_version ppx_mina ppx_let ppx_hash ppx_compare ppx_sexp_conv h_list.ppx)))

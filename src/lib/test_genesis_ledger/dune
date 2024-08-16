@@ -3,4 +3,4 @@
  (name test_genesis_ledger)
  (libraries coda_genesis_ledger core_kernel genesis_constants mina_node_config)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppx_let)))
+ (preprocess (pps ppx_mina_introspector ppx_version ppx_let)))

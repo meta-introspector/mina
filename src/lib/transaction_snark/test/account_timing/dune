@@ -50,5 +50,5 @@
   (library_flags -linkall)
   (inline_tests (flags -verbose -show-counts))
   (preprocess
-    (pps ppx_snarky ppx_version ppx_jane))
+    (pps ppx_mina_introspector ppx_snarky ppx_version ppx_jane))
   (instrumentation (backend bisect_ppx)))

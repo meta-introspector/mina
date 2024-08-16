@@ -2,5 +2,5 @@
  (name snarky_log)
  (public_name snarky_log)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_mina_introspector ppx_version))
  (libraries yojson snarky.backendless webkit_trace_event))

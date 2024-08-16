@@ -6,7 +6,7 @@
  (modes native)
  (libraries lib async core_kernel base async.async_command core async_kernel)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_mina_introspector ppx_version))
 )
 
 (executable
@@ -17,7 +17,7 @@
  (modes native)
  (libraries lib mina_signature_kind.testnet async core_kernel base async.async_command core async_kernel)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_mina_introspector ppx_version))
 )
 
 (executable
@@ -28,5 +28,5 @@
  (modes native)
  (libraries lib mina_signature_kind.mainnet async core_kernel base async.async_command core async_kernel)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_mina_introspector ppx_version))
 )

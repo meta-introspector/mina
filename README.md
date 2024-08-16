@@ -1,4 +1,7 @@
 
+nix develop mina --accept-flake-config --verbose --show-trace --print-build-logs --verbose --option eval-cache false 
+nix build mina --accept-flake-config --verbose --show-trace --print-build-logs --verbose --option eval-cache false 
+
 
 # ppx 
 

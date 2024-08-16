@@ -4,4 +4,4 @@
  (kind ppx_deriver)
  (libraries ppxlib core_kernel base compiler-libs)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppxlib.metaquot)))
+ (preprocess (pps ppx_mina_introspector ppx_version ppxlib.metaquot)))

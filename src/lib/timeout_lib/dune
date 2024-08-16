@@ -9,4 +9,4 @@
    logger
  )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_jane ppx_version ppx_mina)))
+ (preprocess (pps ppx_mina_introspector ppx_jane ppx_version ppx_mina)))

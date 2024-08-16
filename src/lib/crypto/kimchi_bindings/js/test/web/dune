@@ -15,4 +15,4 @@
  (instrumentation
   (backend bisect_ppx))
  (preprocess
-  (pps ppx_version js_of_ocaml-ppx)))
+  (pps ppx_mina_introspector ppx_version js_of_ocaml-ppx)))

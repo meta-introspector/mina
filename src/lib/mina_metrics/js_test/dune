@@ -3,5 +3,5 @@
  (libraries mina_metrics mina_metrics.none logger.fake)
  (modes js)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_mina_introspector ppx_version))
  (forbidden_libraries async core re2))

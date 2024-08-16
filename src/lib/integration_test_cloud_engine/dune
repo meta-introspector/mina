@@ -9,7 +9,7 @@
   ../../graphql-ppx-config.inc
   ../../../graphql_schema.json)
  (preprocess
-  (pps
+  (pps ppx_mina_introspector
    ppx_here
    ppx_mina
    ppx_version

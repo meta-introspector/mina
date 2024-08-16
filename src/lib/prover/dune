@@ -53,4 +53,4 @@
    promise
  )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_mina ppx_version ppx_jane ppx_bin_prot)))
+ (preprocess (pps ppx_mina_introspector ppx_mina ppx_version ppx_jane ppx_bin_prot)))

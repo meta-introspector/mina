@@ -2,7 +2,7 @@
  (name transition_chain_prover)
  (public_name transition_chain_prover)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppx_jane))
+ (preprocess (pps ppx_mina_introspector ppx_version ppx_jane))
  (libraries
    ;; opam libraries
    core

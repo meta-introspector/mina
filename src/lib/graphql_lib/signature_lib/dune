@@ -15,7 +15,7 @@
   graphql_basic_scalars
   signature_lib)
  (preprocess
-  (pps ppx_jane ppx_version))
+  (pps ppx_mina_introspector ppx_jane ppx_version))
  (instrumentation
   (backend bisect_ppx))
  (synopsis "Definitions required for graphql implementation"))

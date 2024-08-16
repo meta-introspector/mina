@@ -22,4 +22,4 @@
    snarky.backendless
    snarky.intf)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version js_of_ocaml-ppx)))
+ (preprocess (pps ppx_mina_introspector ppx_version js_of_ocaml-ppx)))

@@ -8,4 +8,4 @@
             ; --
             core core_kernel base base.caml bin_prot splittable_random sexplib0)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_jane ppx_version)))
+ (preprocess (pps ppx_mina_introspector ppx_jane ppx_version)))

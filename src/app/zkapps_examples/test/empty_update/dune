@@ -44,7 +44,7 @@
    bounded_types
    )
   (preprocess
-    (pps ppx_snarky ppx_version ppx_jane))
+    (pps ppx_mina_introspector ppx_snarky ppx_version ppx_jane))
   (instrumentation (backend bisect_ppx)))
 
 (rule

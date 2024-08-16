@@ -21,7 +21,7 @@
   snarky.backendless
   test_util)
  (preprocess
-  (pps
+  (pps ppx_mina_introspector
    ppx_base
    ppx_let
    ppx_assert))

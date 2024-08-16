@@ -3,4 +3,4 @@
  (name key_cache_native)
  (libraries key_cache key_cache.async key_cache.sync)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version)))
+ (preprocess (pps ppx_mina_introspector ppx_version)))

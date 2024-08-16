@@ -9,6 +9,6 @@
    digestif
 )
  (preprocess
-  (pps ppx_version ppx_jane ppx_compare))
+  (pps ppx_mina_introspector ppx_version ppx_jane ppx_compare))
  (instrumentation (backend bisect_ppx))
  (synopsis "SNARK keys"))

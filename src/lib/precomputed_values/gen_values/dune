@@ -37,6 +37,6 @@
    staged_ledger_diff
  )
  (preprocess
-  (pps ppx_version ppx_let ppxlib.metaquot ppx_here))
+  (pps ppx_mina_introspector ppx_version ppx_let ppxlib.metaquot ppx_here))
  (instrumentation (backend bisect_ppx))
  (modes native))

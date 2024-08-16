@@ -19,4 +19,4 @@
    ppx_to_enum
 )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppxlib.metaquot)))
+ (preprocess (pps ppx_mina_introspector ppx_version ppxlib.metaquot)))

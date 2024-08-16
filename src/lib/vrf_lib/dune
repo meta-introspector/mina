@@ -22,7 +22,7 @@
    ppx_version.runtime
  )
  (preprocess
-  (pps
+  (pps ppx_mina_introspector
     h_list.ppx
     ppx_bench
     ppx_compare

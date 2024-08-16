@@ -3,6 +3,6 @@
  (public_name mina_metrics)
  (libraries async_kernel logger uri core_kernel)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_mina_introspector ppx_version))
  (virtual_modules mina_metrics)
  (default_implementation mina_metrics.prometheus))

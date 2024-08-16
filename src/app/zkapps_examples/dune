@@ -32,6 +32,6 @@
    with_hash)
  (instrumentation (backend bisect_ppx))
  (preprocess
-  (pps
+  (pps ppx_mina_introspector
    ppx_let
    ppx_version)))

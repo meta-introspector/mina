@@ -16,5 +16,5 @@
    interpolator_lib
  )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppxlib.metaquot))
+ (preprocess (pps  ppx_version ppxlib.metaquot))
  (ppx_runtime_libraries structured_log_events yojson))

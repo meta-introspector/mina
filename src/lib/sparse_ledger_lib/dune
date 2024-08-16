@@ -18,6 +18,6 @@
    bounded_types
  )
  (preprocess
-  (pps ppx_jane ppx_compare ppx_deriving_yojson ppx_version))
+  (pps ppx_mina_introspector ppx_jane ppx_compare ppx_deriving_yojson ppx_version))
  (instrumentation (backend bisect_ppx))
  (synopsis "sparse Ledger implementation"))

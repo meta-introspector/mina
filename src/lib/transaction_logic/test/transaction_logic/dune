@@ -43,5 +43,5 @@
    zkapp_command_builder
    )
 (preprocess
- (pps ppx_snarky ppx_version ppx_jane ppx_sexp_conv ppx_assert))
+ (pps ppx_mina_introspector ppx_snarky ppx_version ppx_jane ppx_sexp_conv ppx_assert))
 (instrumentation (backend bisect_ppx)))

@@ -58,4 +58,4 @@
    mina_runtime_config
    )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_mina ppx_version ppx_jane)))
+ (preprocess (pps ppx_mina_introspector ppx_mina ppx_version ppx_jane)))

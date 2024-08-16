@@ -2,7 +2,7 @@
  (name snarky_blake2)
  (public_name snarky_blake2)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppx_jane ppx_compare))
+ (preprocess (pps ppx_mina_introspector ppx_version ppx_jane ppx_compare))
  (inline_tests (flags -verbose -show-counts))
  (libraries
    ;; opam libraries

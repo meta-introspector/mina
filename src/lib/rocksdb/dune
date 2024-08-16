@@ -22,6 +22,6 @@
   key_value_database
   )
  (preprocess
-  (pps ppx_version ppx_jane))
+  (pps ppx_mina_introspector ppx_version ppx_jane))
  (instrumentation (backend bisect_ppx))
  (synopsis "RocksDB Database module"))

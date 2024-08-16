@@ -22,4 +22,4 @@
    transaction_snark
  )
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_let ppx_custom_printf ppx_version)))
+ (preprocess (pps ppx_mina_introspector ppx_let ppx_custom_printf ppx_version)))

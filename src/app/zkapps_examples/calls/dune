@@ -28,6 +28,6 @@
    zkapps_examples)
  (instrumentation (backend bisect_ppx))
  (preprocess
-  (pps
+  (pps ppx_mina_introspector
    ppx_version
    h_list.ppx)))

@@ -8,7 +8,7 @@
    snark_params
    bignum_bigint
 )
- (preprocess (pps
+ (preprocess (pps ppx_mina_introspector
     ppx_version
     ))
  (instrumentation (backend bisect_ppx)))

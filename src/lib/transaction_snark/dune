@@ -70,6 +70,6 @@
    snark_keys_header
  )
  (preprocess
-  (pps ppx_snarky ppx_version ppx_mina ppx_jane ppx_deriving.std ppx_deriving_yojson h_list.ppx))
+  (pps ppx_mina_introspector ppx_snarky ppx_version ppx_mina ppx_jane ppx_deriving.std ppx_deriving_yojson h_list.ppx))
  (instrumentation (backend bisect_ppx))
  (synopsis "Transaction state transition snarking library"))

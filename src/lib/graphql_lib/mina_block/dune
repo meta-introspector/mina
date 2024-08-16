@@ -18,7 +18,7 @@
    pickles
    pickles_types
  )
- (preprocess (pps ppx_jane ppx_version))
+ (preprocess (pps ppx_mina_introspector ppx_jane ppx_version))
  (instrumentation
   (backend bisect_ppx))
  (synopsis "Definitions required for graphql implementation"))

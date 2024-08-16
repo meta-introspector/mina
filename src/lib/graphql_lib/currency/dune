@@ -15,6 +15,6 @@
    graphql_basic_scalars
    currency
  )
- (preprocess (pps ppx_jane ppx_version))
+ (preprocess (pps ppx_mina_introspector ppx_jane ppx_version))
  (instrumentation (backend bisect_ppx))
  (synopsis "Unix specific utils for currency types"))

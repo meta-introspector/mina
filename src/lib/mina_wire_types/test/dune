@@ -39,6 +39,6 @@
     staged_ledger_diff
     bounded_types
     )
-  (preprocess (pps ppx_version))
+  (preprocess (pps ppx_mina_introspector ppx_version))
   (instrumentation (backend bisect_ppx))
   )

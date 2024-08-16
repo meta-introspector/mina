@@ -2,6 +2,6 @@
  (name mina_incremental)
  (public_name mina_incremental)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_mina_introspector ppx_version))
  (libraries incremental pipe_lib async_kernel)
 )

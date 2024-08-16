@@ -2,7 +2,7 @@
  (name random_oracle_permutation_ocaml)
  (public_name random_oracle.permutation.ocaml)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_mina_introspector ppx_version))
  (libraries
    ;; opam libraries
    base

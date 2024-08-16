@@ -16,7 +16,7 @@
     kimchi_pasta.basic
     blake2
     )
-  (preprocess (pps ppx_version))
+  (preprocess (pps ppx_mina_introspector ppx_version))
   (instrumentation (backend bisect_ppx)))
 
 ; Include index.mld in generated doc

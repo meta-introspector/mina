@@ -3,5 +3,5 @@
  (name promise_native)
  (libraries base async_kernel run_in_thread)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version))
+ (preprocess (pps ppx_mina_introspector ppx_version))
  (implements promise))

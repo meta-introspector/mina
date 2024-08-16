@@ -2,8 +2,8 @@
 (vendored_dirs tests)
 
 (library
- (name ppx_mina)
- (public_name ppx_mina)
+ (name ppx_mina_introspector)
+ (public_name ppx_mina_introspector)
  (kind ppx_deriver)
  (libraries
    ;; opam libraries
@@ -13,10 +13,6 @@
    core_kernel
    base
    base.caml
-   ;; local libraries
-   ppx_representatives
-   ppx_register_event
-   ppx_to_enum
 )
- (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppxlib.metaquot)))
+ 
+ )

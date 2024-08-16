@@ -35,6 +35,6 @@
    consensus
    o1trace
    )
-  (preprocess (pps ppx_jane ppx_deriving.std ppx_mina ppx_version))
+  (preprocess (pps ppx_mina_introspector ppx_jane ppx_deriving.std ppx_mina ppx_version))
   (instrumentation (backend bisect_ppx))
   (synopsis "Node status service library for collect data from nodes"))

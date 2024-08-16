@@ -14,4 +14,4 @@
  )
  (inline_tests (flags -verbose -show-counts))
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppx_deriving_yojson ppx_sexp_conv ppx_inline_test ppx_let ppx_deriving.ord ppx_compare)))
+ (preprocess (pps ppx_mina_introspector ppx_version ppx_deriving_yojson ppx_sexp_conv ppx_inline_test ppx_let ppx_deriving.ord ppx_compare)))

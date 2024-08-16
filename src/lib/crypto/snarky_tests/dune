@@ -5,7 +5,7 @@
  (deps
   (source_tree examples))
  (preprocess
-  (pps
+  (pps ppx_mina_introspector
    ppx_version
    ppx_mina
    ppx_jane

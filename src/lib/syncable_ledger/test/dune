@@ -32,5 +32,5 @@
    bounded_types
    )
  (preprocess
-  (pps ppx_version ppx_jane ppx_compare ppx_deriving_yojson))
+  (pps ppx_mina_introspector ppx_version ppx_jane ppx_compare ppx_deriving_yojson))
  (instrumentation (backend bisect_ppx)))

@@ -24,5 +24,5 @@
    transition_frontier_full_frontier
    yojson)
  (instrumentation (backend bisect_ppx))
- (preprocess (pps ppx_version ppx_let ppx_custom_printf))
+ (preprocess (pps ppx_mina_introspector ppx_version ppx_let ppx_custom_printf))
  (modes native))

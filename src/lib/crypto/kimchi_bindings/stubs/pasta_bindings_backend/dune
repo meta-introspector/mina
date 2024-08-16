@@ -6,6 +6,6 @@
   (backend bisect_ppx))
  (inline_tests (flags -verbose -show-counts))
  (preprocess
-  (pps ppx_version ppx_inline_test))
+  (pps ppx_mina_introspector ppx_version ppx_inline_test))
  (virtual_modules pasta_bindings_backend)
  (default_implementation pasta_bindings.backend.native))

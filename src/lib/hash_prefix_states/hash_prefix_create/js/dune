@@ -5,5 +5,5 @@
  (instrumentation
   (backend bisect_ppx))
  (preprocess
-  (pps ppx_version))
+  (pps ppx_mina_introspector ppx_version))
  (implements hash_prefix_create))
